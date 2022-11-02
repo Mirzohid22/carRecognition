@@ -13,7 +13,7 @@ async function asyncReadFile(filename) {
       })
       .map((attributes) => {
         const car = {};
-        car["class"] = attributes[6]; //6
+        car["className"] = attributes[6]; //6
         car["buying"] = attributes[0]; // 0
         car["maint"] = attributes[1]; // 1
         car["doors"] = attributes[2]; // 2
@@ -35,7 +35,13 @@ asyncReadFile("./car.data")
   .then((data) => {
     cars = data;
   })
-  .finally(() => console.log("cars"));
+  .finally(() => {
+    console.log(malibu);
+    console.log(cars.length);
+    const res = main(malibu);
+    console.log("class: ", res.className);
+    console.log("percentage: ", Math.floor((res.maxPts * 100) / 6) + "%");
+  }); // main()
 // ---------------------------- class Car 🚗----------------------------------
 class Car {
   constructor(buying, maint, doors, persons, lug_boot, safety) {
@@ -50,6 +56,27 @@ class Car {
   }
 }
 
-const malibu = new Car("vhigh", "high", 3, "more", "small", "low");
-console.log("🚘: ", malibu);
+var malibu = new Car("vhigh", "high", 2, "more", "small", "low");
+// console.log("🚘: ", malibu);
 // ---------------------------- function main() 🤖 ----------------------------------
+// console.log(cars);
+function main(current) {
+  let className = "";
+  let maxPts = 0;
+  let pts = 0;
+
+  for (let car of cars) {
+    pts = 0;
+    for (let key in car) {
+      if (car[key] == current[key]) {
+        pts++;
+      }
+    }
+    if (maxPts < pts) {
+      maxPts = pts;
+      className = car.className;
+    }
+  }
+
+  return { className, maxPts };
+}
