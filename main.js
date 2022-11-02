@@ -30,7 +30,26 @@ async function asyncReadFile(filename) {
     console.log(err);
   }
 }
-let cars = []
-asyncReadFile("./car.data").then(data => { cars = data }).finally(() => console.log(cars));
+let cars = [];
+asyncReadFile("./car.data")
+  .then((data) => {
+    cars = data;
+  })
+  .finally(() => console.log("cars"));
 // ---------------------------- class Car 🚗----------------------------------
+class Car {
+  constructor(buying, maint, doors, persons, lug_boot, safety) {
+    return {
+      buying,
+      maint,
+      doors,
+      persons,
+      lug_boot,
+      safety,
+    };
+  }
+}
+
+const malibu = new Car("vhigh", "high", 3, "more", "small", "low");
+console.log("🚘: ", malibu);
 // ---------------------------- function main() 🤖 ----------------------------------
